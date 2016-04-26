@@ -5,6 +5,7 @@ Bult in python3, this repo is bascially batteries not included. I'll explain wha
 
 Big disclaimer, I haven't managed to match SSL's settings exactly. If someone wants to figure it out and send me a pull request go for it. See below in settings for best settings to use.
 
+![alt text](http://i.imgur.com/mMfz3XO.png "Screenshot")
 
 ## Dependencies
 This is built on basic python3, tested on 3.4 I have used PyQt4 for the window so youll need that as well as python3.
