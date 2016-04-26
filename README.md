@@ -1,5 +1,6 @@
-# ssl-para-ebola
-Its basically a fancy software ruler for SSL
+# SSL Paraebola
+*(Its a pun)*  
+Basically a dumb software ruler for Shell Shock Live.
 
 Bult in python3, this repo is very much so *batteries not included*. I'll explain what you can do to get it working will by no means hold your hand.
 
