@@ -1,12 +1,14 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 import sys, math
 from PyQt4 import QtGui, QtCore
 
-class Example(QtGui.QWidget):
+class Paraebola(QtGui.QWidget):
+
+	## Init Derp
     
 	def __init__(self):
-		super(Example, self).__init__()
+		super(Paraebola, self).__init__()
 
 		self.gravity = 2.9
 		self.velocity = 10
@@ -15,118 +17,104 @@ class Example(QtGui.QWidget):
 		self.origin_x = 450
 		self.origin_y = 450
 		self.initUI()
-        
-	def initUI(self):      
 
+	## Intialize Dat Shit
+
+	def initUI(self):
 
 		# Main window
 		self.window = QtGui.QWidget()
 
-		# Gravity Slider
+		# Gravity Slider + Counter
 		grav_counter = QtGui.QLCDNumber(self)
 		grav_slider = QtGui.QSlider(QtCore.Qt.Vertical, self)
 		grav_slider.setValue(10)
 		grav_slider.setMaximum(1000)
 		grav_label = QtGui.QLabel("Gravity")
 
-		# Air Resistance Slider
+		gravity_hlayout = QtGui.QHBoxLayout()
+		gravity_hlayout.addWidget(grav_counter)
+		gravity_hlayout.addWidget(grav_slider)
+
+		# Air Resistance Slider + Counter
 		air_counter = QtGui.QLCDNumber(self)
 		air_slider = QtGui.QSlider(QtCore.Qt.Vertical, self)
 		air_slider.setValue(10)
 		air_slider.setMaximum(200)
 		air_label = QtGui.QLabel("Air Resistance")
 
-		# Velocity/Angle Sliders and Counters
-		self.counter1 = QtGui.QLCDNumber(self)
-		self.counter2 = QtGui.QLCDNumber(self)
-		slider1_label = QtGui.QLabel("Velocity")
-		slider1 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-		slider1.setValue(self.velocity)
-		slider1.setMaximum(100)
-		slider2_label = QtGui.QLabel("Angle")
-		slider2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-		slider2.setValue(self.angle)
-		slider2.setMaximum(180)
+		air_hlayout = QtGui.QHBoxLayout()
+		air_hlayout.addWidget(air_counter)
+		air_hlayout.addWidget(air_slider)
 
+		# Velocity Slider + Counter
+		velocity_counter = QtGui.QLCDNumber(self)
+		velocity_slider_label = QtGui.QLabel("Velocity")
+		velocity_slider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+		velocity_slider.setValue(self.velocity)
+		velocity_slider.setMaximum(100)
 
-		bhbox = QtGui.QHBoxLayout()
-		sliderb1 = QtGui.QVBoxLayout()
-		sliderb2 = QtGui.QVBoxLayout()
+		velocity_vlayout = QtGui.QVBoxLayout()
+		velocity_vlayout.addWidget(velocity_slider_label)
+		velocity_vlayout.addWidget(velocity_counter)
+		velocity_vlayout.addWidget(velocity_slider)
 
-		sliderb1.addWidget(slider1_label)
-		sliderb1.addWidget(self.counter1)
-		sliderb1.addWidget(slider1)
-		sliderb2.addWidget(slider2_label)
-		sliderb2.addWidget(self.counter2)
-		sliderb2.addWidget(slider2)
+		# Angle Slider + Counter
+		angle_counter = QtGui.QLCDNumber(self)
+		angle_slider_label = QtGui.QLabel("Angle")
+		angle_slider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+		angle_slider.setValue(self.angle)
+		angle_slider.setMaximum(180)
 
-		bhbox.addLayout(sliderb1)
-		bhbox.addLayout(sliderb2)
+		angle_vlayout = QtGui.QVBoxLayout()
+		angle_vlayout.addWidget(angle_slider_label)
+		angle_vlayout.addWidget(angle_counter)
+		angle_vlayout.addWidget(angle_slider)
 
 		# Autobots Assemble
-		thbox = QtGui.QHBoxLayout()
-		thbox.addWidget(self.window)
-		thbox.setStretchFactor(self.window, 10)
+		top_right_vlayout = QtGui.QVBoxLayout()
+		top_right_vlayout.addWidget(grav_label)
+		top_right_vlayout.addLayout(gravity_hlayout)
+		top_right_vlayout.addWidget(air_label)
+		top_right_vlayout.addLayout(air_hlayout)
 
-		tvbox = QtGui.QVBoxLayout()
-		tvhbox1 = QtGui.QHBoxLayout()
-		tvhbox2 = QtGui.QHBoxLayout()
+		top_hlayout = QtGui.QHBoxLayout()
+		top_hlayout.addWidget(self.window)
+		top_hlayout.setStretchFactor(self.window, 10)
+		top_hlayout.addLayout(top_right_vlayout)
+		top_hlayout.setStretchFactor(top_right_vlayout, 1)
 
-		tvhbox1.addWidget(grav_counter)
-		tvhbox1.addWidget(grav_slider)
-		tvhbox2.addWidget(air_counter)
-		tvhbox2.addWidget(air_slider)
-
-		tvbox.addWidget(grav_label)
-		tvbox.addLayout(tvhbox1)
-		tvbox.addWidget(air_label)
-		tvbox.addLayout(tvhbox2)
-
-		thbox.addLayout(tvbox)
-		thbox.setStretchFactor(tvbox, 1)
+		bottom_hlayout = QtGui.QHBoxLayout()
+		bottom_hlayout.addLayout(velocity_vlayout)
+		bottom_hlayout.addLayout(angle_vlayout)
 
 		vbox = QtGui.QVBoxLayout()
-		vbox.addLayout(thbox)
-		vbox.setStretchFactor(thbox, 10)
-		vbox.addLayout(bhbox)
-		vbox.setStretchFactor(bhbox, 1)
+		vbox.addLayout(top_hlayout)
+		vbox.setStretchFactor(top_hlayout, 10)
+		vbox.addLayout(bottom_hlayout)
+		vbox.setStretchFactor(bottom_hlayout, 1)
 
 		# Slap er up
 		self.setLayout(vbox)
 
 		# Plug in all the bells and whistles
-		slider1.valueChanged.connect(self.counter1.display)
-		slider2.valueChanged.connect(self.counter2.display)
-		slider1.valueChanged.connect(self.setvelocity)
-		slider2.valueChanged.connect(self.setAngle)
+		velocity_slider.valueChanged.connect(velocity_counter.display)
+		angle_slider.valueChanged.connect(angle_counter.display)
+		velocity_slider.valueChanged.connect(self.setvelocity)
+		angle_slider.valueChanged.connect(self.setAngle)
 		grav_slider.valueChanged.connect(self.setGravity)
 		grav_slider.valueChanged.connect(grav_counter.display)
 		air_slider.valueChanged.connect(self.setAir)
 		air_slider.valueChanged.connect(air_counter.display)
 
+		# Set window settings
 		self.setGeometry(300, 300, 2650, 1400)
-		self.setWindowTitle('Parabola')
+		self.setWindowTitle('Para ebola')
 		self.setWindowOpacity(0.7)
 		self.show()
 
-	def setvelocity(self, value):
-		self.velocity = float(value)
 
-	def setAngle(self, value):
-		self.angle = math.radians(float(value))
-
-	def setGravity(self, value):
-		self.gravity = float(value) / 100
-
-	def setAir(self, value):
-		self.air_resistance = float(value) / 1000
-
-	def paintEvent(self, e):
-		qp = QtGui.QPainter()
-		qp.begin(self)
-		self.drawPoints(qp)
-		qp.end()
-		self.update()
+	## Main graph line function
 
 	def drawPoints(self, qp):
 
@@ -160,14 +148,40 @@ class Example(QtGui.QWidget):
 		qp.drawLine(self.origin_x - reticule_offset, self.origin_y, self.origin_x + reticule_offset, self.origin_y)
 		qp.drawLine(self.origin_x, self.origin_y - reticule_offset, self.origin_x, self.origin_y + reticule_offset)
 
+	## Setters
+
+	def setvelocity(self, value):
+		self.velocity = float(value)
+
+	def setAngle(self, value):
+		self.angle = math.radians(float(value))
+
+	def setGravity(self, value):
+		self.gravity = float(value) / 100
+
+	def setAir(self, value):
+		self.air_resistance = float(value) / 1000
+
+	## Paint Function
+
+	def paintEvent(self, e):
+		qp = QtGui.QPainter()
+		qp.begin(self)
+		self.drawPoints(qp)
+		qp.end()
+		self.update()
+
+	## Mouse Event
+
 	def mouseMoveEvent(self, QMouseEvent):
 		cursor = QtGui.QCursor()
 		self.origin_x =  cursor.pos().x()
 		self.origin_y =  cursor.pos().y()
 
+
 def main():
 	app = QtGui.QApplication(sys.argv)
-	ex = Example()
+	paraebola = Paraebola()
 	sys.exit(app.exec_())
 
 
