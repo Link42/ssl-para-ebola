@@ -7,7 +7,7 @@ Bult in python3, this repo is very much so *batteries not included*. I'll explai
 Also remeber you are a horrible person if you use this tool. Just putting that out there.  
 \-Harbinger of Tanks
 
-Big disclaimer, I haven't managed to match SSL's physics xactly. If someone wants to figure it out and let me know go for it. The information below explains how to tune the knobs for close to perfect acuracy.
+Big disclaimer, I haven't managed to match SSL's physics exactly. If someone wants to figure it out and let me know go for it. The information below explains how to tune the knobs for close to perfect accuracy.
 
 ![alt text](http://i.imgur.com/mMfz3XO.png "Screenshot")
 
